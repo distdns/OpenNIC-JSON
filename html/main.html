@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>OpenNIC JSON API</title>
+	<style type="text/css">
+		pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+		.string { color: green; }
+		.number { color: darkorange; }
+		.boolean { color: blue; }
+		.null { color: magenta; }
+		.key { color: red; }
+	</style>
+</head>
+
+<body>
+	<ul>
+		<li><a href="/">Info</a></li>
+		<li><a href="/tier2s.html">Tier2s</a> <sup><a href="/tier2s.html?geoorder=true">geo-order</a></sup> <sup><a href="/tier2s.json">json</a></sup> <sup><a href="/tier2s.json?geoorder=true">json geo-order</a></sup></li>
+		<li><a href="/tier1s.html">Tier1s</a> <sup><a href="/tier1s.json">json</a></sup></li>
+		<li><a href="/tlds.html">TLDs</a> <sup><a href="/tlds.json">json</a></sup></li>
+		<li><a href="/newnationstlds.html">New-Nations TLDs</a> <sup><a href="/newnationstlds.json">json</a></sup></li>
+	</ul>
+	<h2>{{title}}</h2>
+
+	<main>
+		<pre>{{content}}</pre>
+	</main>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>OpenNIC JSON API</title>
+	<style type="text/css">
+		pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+		.string { color: green; }
+		.number { color: darkorange; }
+		.boolean { color: blue; }
+		.null { color: magenta; }
+		.key { color: red; }
+	</style>
+</head>
+
+<body>
+	<ul>
+		<li><a href="/">Info</a></li>
+		<li><a href="/tier2s.html">Tier2s</a> <sup><a href="/tier2s.html?geoorder=true">geo-order</a></sup> <sup><a href="/tier2s.json">json</a></sup> <sup><a href="/tier2s.json?geoorder=true">json geo-order</a></sup></li>
+		<li><a href="/tier1s.html">Tier1s</a> <sup><a href="/tier1s.json">json</a></sup></li>
+		<li><a href="/tlds.html">TLDs</a> <sup><a href="/tlds.json">json</a></sup></li>
+		<li><a href="/newnationstlds.html">New-Nations TLDs</a> <sup><a href="/newnationstlds.json">json</a></sup></li>
+	</ul>
+	<h2>OpenNIC JSON API</h2>
+
+	<main>
+		<p>This is an unofficial API which provides details on OpenNIC DNS servers and TLDs. The information is sourced from the OpenNIC root zone by querying around every 5 minutes. Uptime of servers is calculated every 5 minutes from all past and present checks. You can sort Tier 2 servers by distance from your IP address. The location details of the servers come from their LOC records while your location data comes from GeoIP. Please explore the options above for more details.</p>
+
+    <p>
+      Available at:
+      <ul>
+        <li>opennicjson.bit</li>
+        <li>opennicjson.mcalinden.me.uk</li>
+      </ul>
+    </p>
+
+		<p>Made by <a href="https://www.mcalinden.me.uk/">Calum McAlinden</a>.</p>
+	</main>
+</body>
+
+</html>
