@@ -150,3 +150,4 @@ app.use(function (req, res) {
 });
 
 app.listen(parseInt(process.argv[2]) || 3000);
+console.log("Listening on port "+(process.argv[2] || 3000));
