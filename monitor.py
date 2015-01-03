@@ -309,8 +309,7 @@ def LOCtoDEC(coord):
 	    }
 
 if __name__ == "__main__":
-
-	uptimeShelve = shelve.open('/opt/monitor/data/uptime.shelve')
+	uptimeShelve = shelve.open(sys.path[0] + "/data/uptime.shelve")
 
 	print "\nStarting TLDs"
 	tlds = GetTLDs(nameserver)
@@ -319,7 +318,7 @@ if __name__ == "__main__":
 		"expectedSOA": CurrentSOA,
 		"data": tlds
 	})
-	jsonfile=open("/opt/monitor/data/tlds.json",'w+')
+	jsonfile=open(sys.path[0] + "/data/tlds.json",'w+')
 	jsonfile.write(data)
 	jsonfile.close()
 
@@ -329,7 +328,7 @@ if __name__ == "__main__":
 		"expectedSOA": CurrentSOA,
 		"data":GetNewNationsTLDs(nameserver)
 	})
-	jsonfile=open("/opt/monitor/data/newnationstlds.json",'w+')
+	jsonfile=open(sys.path[0] + "/data/newnationstlds.json",'w+')
 	jsonfile.write(data)
 	jsonfile.close()
 
@@ -339,7 +338,7 @@ if __name__ == "__main__":
 		"expectedSOA": CurrentSOA,
 		"data":GetT1s(nameserver, uptimeShelve, tlds)
 	})
-	jsonfile=open("/opt/monitor/data/tier1s.json",'w+')
+	jsonfile=open(sys.path[0] + "/data/tier1s.json",'w+')
 	jsonfile.write(data)
 	jsonfile.close()
 
@@ -349,7 +348,7 @@ if __name__ == "__main__":
 		"expectedSOA": CurrentSOA,
 		"data":GetT2s(nameserver, uptimeShelve, tlds)
 	})
-	jsonfile=open("/opt/monitor/data/tier2s.json",'w+')
+	jsonfile=open(sys.path[0] + "/data/tier2s.json",'w+')
 	jsonfile.write(data)
 	jsonfile.close()
 
