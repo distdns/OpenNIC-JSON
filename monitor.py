@@ -13,7 +13,6 @@ from dns.rdataclass import *
 from dns.rdatatype import *
 import string
 import urllib2
-import mistune
 import time
 import json
 import shelve
