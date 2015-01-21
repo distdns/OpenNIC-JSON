@@ -39,7 +39,7 @@ function syntaxHighlight(json) {
 	});
 }
 
-function processTier2s(req, res, respjson) {
+function processTier2s(req, res, respjson, ipAddr) {
 	var longitude = respjson.location.longitude
 	var latitude = respjson.location.latitude
 	fs.readFile('data/tier2s.json', 'utf8', function(err, data) {
@@ -93,14 +93,14 @@ app.get('/tier2s.:format(json|html)', function(req, res) {
 						}
 					}
 				}
-				processTier2s(req, res, respjson)
+				processTier2s(req, res, respjson, ipAddr)
 			})
 		} else {
 			processTier2s(req, res, {
 				"location": {
 					"latitude": req.query.latitude,
 					"longitude": req.query.longitude
-				}
+				}, req.query.latitude+", "+req.query.longitude
 			})
 		}
 	} else {
