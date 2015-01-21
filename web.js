@@ -101,8 +101,8 @@ app.get('/tier2s.:format(json|html)', function(req, res) {
 				"location": {
 					"latitude": req.query.latitude,
 					"longitude": req.query.longitude
-				}, ipAddr
-			})
+				}
+			}, ipAddr)
 		}
 	} else {
 		fs.readFile('data/tier2s.json', function(err, data) {
