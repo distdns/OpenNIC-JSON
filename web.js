@@ -40,6 +40,8 @@ function syntaxHighlight(json) {
 }
 
 function processTier2s(req, res, respjson) {
+	var longitude = respjson.location.longitude
+	var latitude = respjson.location.latitude
 	fs.readFile('data/tier2s.json', 'utf8', function(err, data) {
 		var tier2json = JSON.parse(data);
 
