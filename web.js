@@ -96,11 +96,12 @@ app.get('/tier2s.:format(json|html)', function(req, res) {
 				processTier2s(req, res, respjson, ipAddr)
 			})
 		} else {
+			ipAddr = req.query.latitude+", "+req.query.longitude
 			processTier2s(req, res, {
 				"location": {
 					"latitude": req.query.latitude,
-					"longitude": req.query.longitude,
-				}, req.query.latitude+", "+req.query.longitude
+					"longitude": req.query.longitude
+				}, ipAddr
 			})
 		}
 	} else {
