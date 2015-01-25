@@ -25,8 +25,11 @@
 	<h2>OpenNIC JSON API</h2>
 
 	<main>
-		<p>This is an unofficial API which provides details on OpenNIC DNS servers and TLDs. The information is sourced from the OpenNIC root zone by querying around every 5 minutes. Uptime of servers is calculated every 5 minutes from all past and present checks. You can sort Tier 2 servers by distance from your IP address. The location details of the servers come from their LOC records while your location data comes from GeoIP. Please explore the options above for more details.</p>
-
+		<p>This is an unofficial API which provides details on OpenNIC DNS servers and TLDs. The information is sourced from the OpenNIC root zone by querying around every 5 minutes. Uptime of servers is calculated every 5 minutes from all past and present checks. You can sort Tier 2 servers by distance from your IP address. The location details of the servers come from their LOC records while your location data comes from GeoIP. Please explore the options above for more details.
+		<br>
+		By default, when <strong>geoorder=true</strong> is specified when fetching Tier2s, your IP address location will be looked up using a GeoIP database. However, you can issue decimal coordinates manually, for example:
+		<br>
+		?geoorder=true&<strong>latitude=51.899615</strong>&<strong>latitude=-2.124405</strong>.</p>
     <p>
       Available at:
       <ul>
