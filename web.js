@@ -70,7 +70,7 @@ app.get('/tier2s.:format(json|html)', function(req, res) {
 
 		}
 
-		if(req.param("format") == "json") {
+		if(req.params.format == "json") {
 			res.header('Access-Control-Allow-Origin', '*');
 			res.json(tier2json);
 		} else {
@@ -81,7 +81,7 @@ app.get('/tier2s.:format(json|html)', function(req, res) {
 
 app.get('/tier1s.:format(json|html)', function(req, res) {
 	fs.readFile('data/tier1s.json', function(err, data) {
-		if(req.param("format") == "json") {
+		if(req.params.format == "json") {
 			res.header('Access-Control-Allow-Origin', '*');
 			res.json(JSON.parse(data));
 		} else {
@@ -92,7 +92,7 @@ app.get('/tier1s.:format(json|html)', function(req, res) {
 
 app.get('/tlds.:format(json|html)', function(req, res) {
 	fs.readFile('data/tlds.json', function(err, data) {
-		if(req.param("format") == "json") {
+		if(req.params.format == "json") {
 			res.header('Access-Control-Allow-Origin', '*');
 			res.json(JSON.parse(data));
 		} else {
@@ -103,7 +103,7 @@ app.get('/tlds.:format(json|html)', function(req, res) {
 
 app.get('/newnationstlds.:format(json|html)', function(req, res) {
 	fs.readFile('data/newnationstlds.json', function(err, data) {
-		if(req.param("format") == "json") {
+		if(req.params.format == "json") {
 			res.header('Access-Control-Allow-Origin', '*');
 			res.json(JSON.parse(data));
 		} else {
