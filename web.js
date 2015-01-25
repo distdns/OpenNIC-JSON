@@ -107,7 +107,18 @@ app.get('/newnationstlds.:format(json|html)', function(req, res) {
 			res.header('Access-Control-Allow-Origin', '*');
 			res.json(JSON.parse(data));
 		} else {
-			res.send(mainHTML.replace("{{title}}", "New Nations Top-Level Domains").replace("{{content}}", syntaxHighlight(JSON.parse(data))))
+			res.send(mainHTML.replace("{{title}}", "New-Nations Top-Level Domains").replace("{{content}}", syntaxHighlight(JSON.parse(data))))
+		}
+	});
+})
+
+app.get('/emercointlds.:format(json|html)', function(req, res) {
+	fs.readFile('data/emercointlds.json', function(err, data) {
+		if(req.params.format == "json") {
+			res.header('Access-Control-Allow-Origin', '*');
+			res.json(JSON.parse(data));
+		} else {
+			res.send(mainHTML.replace("{{title}}", "EmerCoin Top-Level Domains").replace("{{content}}", syntaxHighlight(JSON.parse(data))))
 		}
 	});
 })
