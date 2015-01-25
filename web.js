@@ -52,21 +52,25 @@ app.get('/tier2s.:format(json|html)', function(req, res) {
 					var coords = [0, 0]
 				}
 			} else {
-				var ipAddr = req.query.latitude+", "+req.query.longitude
+				var ipAddr = "Specified Coordinate"
 				var coords = [req.query.latitude, req.query.longitude]
 			}
 
-			for(i in tier2json.data) {
-				tier2json.data[i].distance = geolib.getDistance({
-					latitude: coords[0],
-					longitude: coords[1]
-				}, {
-					latitude: tier2json.data[i].coords.lat,
-					longitude: tier2json.data[i].coords.lng
-				});
-			}
+			try{
+				for(i in tier2json.data) {
+					tier2json.data[i].distance = geolib.getDistance({
+						latitude: coords[0],
+						longitude: coords[1]
+					}, {
+						latitude: tier2json.data[i].coords.lat,
+						longitude: tier2json.data[i].coords.lng
+					});
+				}
 
-			tier2json.data.sort(predicatBy("distance"));
+				tier2json.data.sort(predicatBy("distance"));
+			}catch(e){
+				// There was invalid coord input
+			}
 
 		}
 
