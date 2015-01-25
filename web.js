@@ -124,12 +124,6 @@ app.get('/robots.txt', function(req, res) {
 	})
 })
 
-app.get('/robots.txt', function(req, res) {
-	res.sendFile("html/robots.txt", {
-		root: __dirname
-	})
-})
-
 app.use(function(err, req, res, next) {
 	console.error(err.stack);
 	res.status(500).sendFile('html/500.html', {
