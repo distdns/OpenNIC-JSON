@@ -225,6 +225,16 @@ def GetNewNationsTLDs(n):
 	for data in answers:
 		return data.strings
 
+def GetEmercoinTLDs(n):
+	resolver = dns.resolver.Resolver()
+	resolver.nameservers = [n]
+	resolver.timeout = 2
+	resolver.lifetime = 2
+
+	answers = resolver.query('emercoin.tlds.opennic.glue', 'TXT')
+	for data in answers:
+		return data.strings
+
 def GetNSContact(n, ns):
 	if "." in ns:
 		ns = ns[:-14]
@@ -329,6 +339,16 @@ if __name__ == "__main__":
 		"data":GetNewNationsTLDs(nameserver)
 	})
 	jsonfile=open(sys.path[0] + "/data/newnationstlds.json",'w+')
+	jsonfile.write(data)
+	jsonfile.close()
+
+	print "\nStarting EmerCoin TLDs"
+	data = json.dumps({
+		"time": time.time(),
+		"expectedSOA": CurrentSOA,
+		"data":GetEmercoinTLDs(nameserver)
+	})
+	jsonfile=open(sys.path[0] + "/data/emercointlds.json",'w+')
 	jsonfile.write(data)
 	jsonfile.close()
 
