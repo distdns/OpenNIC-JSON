@@ -3,6 +3,7 @@ var app = express();
 var request = require('request');
 var fs = require('fs');
 var geolib = require('geolib');
+var geoip = require('geoip-lite');
 
 var mainHTML = fs.readFileSync('./html/main.html').toString();
 
@@ -39,81 +40,43 @@ function syntaxHighlight(json) {
 	});
 }
 
-function processTier2s(req, res, respjson, ipAddr) {
-	var longitude = respjson.location.longitude
-	var latitude = respjson.location.latitude
-	fs.readFile('data/tier2s.json', 'utf8', function(err, data) {
-		var tier2json = JSON.parse(data);
+app.get('/tier2s.:format(json|html)', function(req, res) {
+	fs.readFile('data/tier2s.json', function(err, data) {
+		tier2json = JSON.parse(data)
+		if(req.query.geoorder !== undefined && req.query.geoorder == "true") {
+			if(req.query.latitude == undefined && req.query.longitude == undefined) {
+				var ipAddr = req.headers['X-Real-IP'] || req.headers['x-real-ip'] || req.connection.remoteAddress;
+				try{
+					var coords = geoip.lookup(ipAddr).ll
+				}catch(e){
+					var coords = [0, 0]
+				}
+			} else {
+				var ipAddr = req.query.latitude+", "+req.query.longitude
+				var coords = [req.query.latitude, req.query.longitude]
+			}
 
-		for(i in tier2json.data) {
-			tier2json.data[i].distance = geolib.getDistance({
-				latitude: latitude,
-				longitude: longitude
-			}, {
-				latitude: tier2json.data[i].coords.lat,
-				longitude: tier2json.data[i].coords.lng
-			});
+			for(i in tier2json.data) {
+				tier2json.data[i].distance = geolib.getDistance({
+					latitude: coords[0],
+					longitude: coords[1]
+				}, {
+					latitude: tier2json.data[i].coords.lat,
+					longitude: tier2json.data[i].coords.lng
+				});
+			}
+
+			tier2json.data.sort(predicatBy("distance"));
+
 		}
-
-		tier2json.data.sort(predicatBy("distance"));
 
 		if(req.param("format") == "json") {
 			res.header('Access-Control-Allow-Origin', '*');
-			res.json(tier2json)
+			res.json(tier2json);
 		} else {
-			res.send(mainHTML.replace("{{title}}", "Public Access (Tier-2) DNS Servers - sorted by distance from " + ipAddr).replace("{{content}}", syntaxHighlight(tier2json)))
+			res.send(mainHTML.replace("{{title}}", "Public Access (Tier-2) DNS Servers").replace("{{content}}", syntaxHighlight(tier2json)))
 		}
-
 	});
-}
-
-app.get('/tier2s.:format(json|html)', function(req, res) {
-	if(req.query.geoorder !== undefined && req.query.geoorder == "true") {
-		if(req.query.latitude == undefined && req.query.longitude == undefined) {
-			var ipAddr = req.headers['X-Real-IP'] || req.headers['x-real-ip'] || req.connection.remoteAddress;
-			request({
-				url: "http://geoip.nekudo.com/api/" + ipAddr
-			}, function index(error, response, body) {
-				try {
-					var respjson = JSON.parse(body)
-
-					if(respjson.type == "error") {
-						var respjson = {
-							"location": {
-								"latitude": 0,
-								"longitude": 0
-							}
-						}
-					}
-				} catch(e) {
-					var respjson = {
-						"location": {
-							"latitude": 0,
-							"longitude": 0
-						}
-					}
-				}
-				processTier2s(req, res, respjson, ipAddr)
-			})
-		} else {
-			ipAddr = req.query.latitude+", "+req.query.longitude
-			processTier2s(req, res, {
-				"location": {
-					"latitude": req.query.latitude,
-					"longitude": req.query.longitude
-				}
-			}, ipAddr)
-		}
-	} else {
-		fs.readFile('data/tier2s.json', function(err, data) {
-			if(req.param("format") == "json") {
-				res.header('Access-Control-Allow-Origin', '*');
-				res.json(JSON.parse(data));
-			} else {
-				res.send(mainHTML.replace("{{title}}", "Public Access (Tier-2) DNS Servers").replace("{{content}}", syntaxHighlight(JSON.parse(data))))
-			}
-		});
-	}
 })
 
 app.get('/tier1s.:format(json|html)', function(req, res) {
